@@ -1,4 +1,4 @@
-function  rel_path = wrelativePath( tgt_path, act_path )
+function  rel_path = wrelativepath( tgt_path, act_path )
 %RELATIVEPATH  returns the relative path from an actual path to the target path.
 %   Both arguments must be strings with absolute paths.
 %   The actual path is optional, if omitted the current dir is used instead.

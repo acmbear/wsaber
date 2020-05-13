@@ -1,4 +1,4 @@
-function indx = wsearchString(sList, s, iCase)
+function indx = wsearchstring(sList, s, iCase)
 
 indx = [];
 for i = 1 : length(sList)

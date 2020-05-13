@@ -1,4 +1,4 @@
-function refIndex = wgetRefIndex(foreignKey, refKey)
+function refIndex = wgetrefindex(foreignKey, refKey)
 % get_refindex    Returns index of `refKey` referred by `foreignKey`
 %
 % This file is a part of BrainDecoderToolbox2.

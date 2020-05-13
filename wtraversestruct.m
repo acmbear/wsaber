@@ -1,4 +1,4 @@
-function s_out = traverse_struct(func, s_in)
+function s_out = wtraversestruct(func, s_in)
 s_out = s_in;
 fnames = fieldnames(s_in);
 for fn = 1 : length(fnames)
