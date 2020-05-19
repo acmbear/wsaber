@@ -4,7 +4,7 @@ function y = wgroupop(x,operate,grouping,dim)
 %    x: 输入矩阵
 %    operate: 操作函数句柄。本函数会将x的指定维度提升至第一维，并将其转成二维矩阵，
 %             因此操作函数必须以二维矩阵为输入，其操作必须面向行而不是面向列，
-%             操作后的矩阵和原矩阵大小相同。
+%             操作后的矩阵必须和原矩阵大小相同。
 %    grouping: 分组标签。为向量时，必须和x的指定维度具有同样的元素数目，每一个
 %              元素是一个分组标签。本函数将把x指定维度具有相同标签的元素分为一组
 %              进行操作。为标量时，表示按照顺序将几个元素划分为一组。为空时，表示
@@ -41,13 +41,15 @@ elseif isscalar(grouping)
     totalrow = size(y,1);
     for i = 1 : step : totalrow
         lowind = wQM(i+step-1<totalrow,i+step-1,totalrow);
-        y(i:lowind,:) = operate(y(i:lowind,:));
+        index = i : lowind;
+        y(index,:) = operate(y(index,:));
     end
 else
     assert(length(grouping)==totalrow, 'id must have the same length');
     uid = unique(grouping);
     for i = 1 : length(uid)
-        y(grouping==uid,:) = operate(y(grouping==uid,:));
+        index = grouping == uid;
+        y(index,:) = operate(y(index,:));
     end
 end
 % 恢复成原来的维度
