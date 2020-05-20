@@ -1,4 +1,4 @@
-function y = wQM(cond,firstvalue,secondvalue)
+function y = wqm(cond,firstvalue,secondvalue)
 %wQM Question Mark,问号表达式
 %  
 %  author: wuhao

@@ -58,7 +58,7 @@ else
     uid = unique(grouping);
     y = nan(length(uid),size(z,2));
     for i = 1 : length(uid)
-        y(i,:) = operate(z(grouping==uid,:));
+        y(i,:) = operate(z(grouping==uid(i),:));
     end
     group = uid;
 end

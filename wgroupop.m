@@ -48,7 +48,7 @@ else
     assert(length(grouping)==totalrow, 'id must have the same length');
     uid = unique(grouping);
     for i = 1 : length(uid)
-        index = grouping == uid;
+        index = grouping == uid(i);
         y(index,:) = operate(y(index,:));
     end
 end
