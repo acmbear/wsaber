@@ -31,7 +31,7 @@ assert(dim <= ndims(x), 'dim out of range.');
 
 [y,d1,d2] = wdimprompt(x,dim); % 将x的dim维提升至第一维，其他维度顺序不变
 sy = size(y);
-y = y(:,:); % 将y展开为2为矩阵，行即是原来x的dim维度。
+y = y(:,:); % 将y展开为2维矩阵，行即是原来x的dim维度。
 totalrow = size(y,1);
 
 if isempty(grouping) % 如果不分组，相当于把该维度所有元素分为一组
@@ -40,7 +40,7 @@ elseif isscalar(grouping)
     step = grouping;
     totalrow = size(y,1);
     for i = 1 : step : totalrow
-        lowind = wQM(i+step-1<totalrow,i+step-1,totalrow);
+        lowind = wqm(i+step-1<totalrow,i+step-1,totalrow);
         index = i : lowind;
         y(index,:) = operate(y(index,:));
     end

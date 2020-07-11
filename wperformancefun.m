@@ -3,7 +3,7 @@ function perf = wperformancefun(y, ybar, opt)
 %  INPUT
 %    y: 真值矩阵，二维，行为sample，列为不同的目标
 %    ybar: 预测值矩阵，二维，行为sample，列为不同的目标
-%    opt: 'mse'|'rmse'|'r2'|'acc', 性能选项。
+%    opt: 'mse'|'rmse'|'r2'|'r'|'acc', 性能选项。
 %  OUTPUT
 %    perf: 性能
 %
@@ -14,6 +14,9 @@ if strcmpi(opt,'mse')
     perf = mean((y-ybar).^2);
 elseif strcmpi(opt,'rmse')
     perf = squre(mean((y-ybar).^2));
+elseif strcmpi(opt,'r')
+    perf = diag(corr(y,ybar));
+    perf = perf';
 elseif strcmpi(opt,'r2')
     perf = diag(corr(y,ybar)).^2;
     perf = perf';

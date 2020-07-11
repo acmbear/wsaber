@@ -35,7 +35,7 @@ assert(dim <= ndims(x), 'dim out of range.');
 [z,d1,d2] = wdimprompt(x,dim); % 将x的dim维提升至第一维，其他维度顺序不变
 sz = size(z);
 z = z(:,:); % 展开为2为矩阵，行即是原来x的dim维度。
-totalrow = size(z,1);
+[totalrow,totalcolumn] = size(z);
 
 if isempty(grouping) % 如果不分组，相当于把该维度所有元素分为一组
     y = operate(z);
@@ -45,20 +45,28 @@ elseif isscalar(grouping)
         warning('grouping greater than size of the dim dimension.');
         grouping = totalrow;
     end
-    y = nan(ceil(totalrow/grouping),size(z,2));
+    y = nan(ceil(totalrow/grouping),totalcolumn);
     n = 1;
     for i = 1 : grouping : totalrow
-        lowind = wQM(i+grouping-1<totalrow,i+grouping-1,totalrow);
-        y(n,:) = operate(z(i:lowind,:));
+        lowind = wqm(i+grouping-1<totalrow,i+grouping-1,totalrow);
+        t = operate(z(i:lowind,:));
+        if size(t,2) ~= totalcolumn
+            error('error: the size of the output of the operate does not match.');
+        end
+        y(n,:) = t;
         n = n + 1;
     end
     group = grouping;
 else
     assert(length(grouping)==totalrow, 'id must have the same length');
     uid = unique(grouping);
-    y = nan(length(uid),size(z,2));
+    y = nan(length(uid),totalcolumn);
     for i = 1 : length(uid)
-        y(i,:) = operate(z(grouping==uid(i),:));
+        t = operate(z(grouping==uid(i),:));
+        if size(t,2) ~= totalcolumn
+            error('error: the size of the output of the operate does not match.');
+        end
+        y(i,:) = t;
     end
     group = uid;
 end

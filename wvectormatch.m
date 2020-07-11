@@ -1,4 +1,4 @@
-function [acc, IDMat] = wvectormatch(x,y,xID,yID,matchMode,statNum,featMask)
+function [acc, IDMat] = wvectormatch(x,y,xID,yID,matchMode,statNum)
 %vectormatch identify each sample of x within y and calculate the
 %identification accuracy.
 %
@@ -10,7 +10,6 @@ function [acc, IDMat] = wvectormatch(x,y,xID,yID,matchMode,statNum,featMask)
 %    yID: M个元素的向量，表示y的样本标签。为空时，表示以行号为ID
 %    matchMode: 'mse'|['pearson'],匹配方法
 %    statNum: 匹配最接近的个数。
-%    featMask: 特征选择向量，选择用来计算匹配度的特征。
 %  OUTPUT
 %    acc: 第一匹配的准确率。x中样本的ID与在y中最佳匹配出来的ID相同的比例。
 %    IDMat: 第一列为最佳匹配的yID，第二列为次佳匹配的yID，依次类推。一般情况下有statNum列有值，
@@ -25,9 +24,6 @@ end
 if ~exist('statNum','var')
     statNum = 1;
 end
-if ~exist('featMask','var') || isempty(featMask)
-    featMask = ones(1,size(x,2));
-end
 
 if isempty(yID)
     yID = 1:size(y,1);
@@ -41,7 +37,7 @@ assert(isvector(xID),'yID should be a vector');
 assert(size(y,1)==length(yID),'unmatched x and xID');
 assert(size(x,1)==length(xID),'unmatched y and yID');
 
-dissimMat = wdissimilarity(x(:,featMask)',y(:,featMask)',matchMode);
+dissimMat = wdissimilarity(x',y',matchMode);
 idMat = nan(length(xID),length(yID));
 for sn = 1 : size(dissimMat,1) % 对每个待识别的样本
     dissim = unique(dissimMat(sn,:),'sorted'); % 由小到大排列
