@@ -2,3 +2,4 @@ model name, referenced external model, external toolbox, author
 wgetrefindex, get_refindex, BrainDecoderToolbox2, 
 wblob, blob, knkutils, Kay
 wreletivepath, relativepath, Jochen Lenz
+randpermfull, randpermfull, Jos van der Geest
